@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import ThreeBackground from "@/components/ThreeBackground";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -60,6 +61,10 @@ export default function RootLayout({
         {/* Animated background noise & grid */}
         <div className="bg-grid fixed inset-0 z-0" aria-hidden="true" />
         <div className="bg-noise fixed inset-0 z-0" aria-hidden="true" />
+        
+        {/* 3D Background */}
+        <ThreeBackground />
+        
         {/* Navbar */}
         
         <main className="flex-grow z-10 flex flex-col">
