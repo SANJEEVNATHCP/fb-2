@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+:root {
+  /* Minimalist Matte Black Palette */
+  --arctic-powder: #FFFFFF;
+  --mystic-mint: #A3A3A3;
+  --nocturnal-expedition: #111111;
+  --oceanic-noir: #0A0A0A;
+
+  /* Accent colors used sparingly */
+  --forsythia: #FFFFFF; /* Replaced yellow with stark white for high contrast */
+  --deep-saffron: #E5E5E5;
+
+  --background: var(--oceanic-noir);
+  --foreground: var(--arctic-powder);
+  --surface: var(--nocturnal-expedition);
+  --border: rgba(255, 255, 255, 0.08);
+  
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@theme inline {
+  --color-arctic: var(--arctic-powder);
+  --color-mint: var(--mystic-mint);
+  --color-forsythia: var(--forsythia);
+  --color-saffron: var(--deep-saffron);
+  --color-nocturnal: var(--nocturnal-expedition);
+  --color-oceanic: var(--oceanic-noir);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+
+  --animate-fade-in: fade-in 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-fade-up: fade-up 600ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-float-slow: float 12s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 30px, 0); filter: blur(4px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
+}
+@keyframes float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -10px, 0) scale(1.02); }
+}
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes ambient-blob {
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.3; }
+  33% { transform: translate3d(15vw, -10vh, 0) scale(1.1); opacity: 0.5; }
+  66% { transform: translate3d(-10vw, 15vh, 0) scale(0.9); opacity: 0.4; }
+  100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.3; }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Background Ambient Lighting */
+.bg-ambient-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: 0;
+  pointer-events: none;
+  animation: ambient-blob 30s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform, opacity;
+}
+
+/* Glassmorphism utilities - refined for charcoal/black */
+.glass {
+  background: rgba(17, 17, 17, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel {
+  background: linear-gradient(145deg, rgba(26, 26, 26, 0.5) 0%, rgba(10, 10, 10, 0.8) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Scroll Reveal Utilities */
+.reveal-hidden {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  transition: opacity 600ms var(--ease-cinematic), transform 600ms var(--ease-cinematic), filter 600ms var(--ease-cinematic);
+  will-change: opacity, transform;
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Calm, minimal spotlight background */
+.bg-gradient-mesh {
+  background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03), transparent 60%);
+}
+
+/* Subtle architectural grid */
+.bg-grid {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+}
+
+/* Micro noise texture */
+.bg-noise {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Accordion Animation */
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms var(--ease-cinematic), opacity 400ms var(--ease-cinematic);
+  opacity: 0;
+}
+.accordion-content[data-state="open"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.accordion-inner {
+  overflow: hidden;
+}
+
+/* Minimalist Microinteractions */
+.hover-lift {
+  transition: transform 300ms var(--ease-cinematic), border-color 300ms var(--ease-cinematic), box-shadow 300ms var(--ease-cinematic);
+  will-change: transform;
+}
+.hover-lift:hover {
+  transform: translate3d(0, -8px, 0);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.9);
+}
+
+.btn-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.btn-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-20deg);
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-sheen:hover::after {
+  transform: skewX(-20deg) translateX(300%);
+}
+
+.glow-hover {
+  transition: background-color 300ms var(--ease-cinematic), color 300ms var(--ease-cinematic);
+}
+.glow-hover:hover {
+  background-color: rgba(255, 255, 255, 1);
+  color: #0A0A0A;
+}
+
+.button-press {
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.button-press:active {
+  transform: scale(0.98);
+}
+
+/* Typography styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-mono);
+}
