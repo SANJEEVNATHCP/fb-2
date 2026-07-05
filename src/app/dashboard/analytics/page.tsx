@@ -5,10 +5,10 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip as RechartsTooltip, L
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { AIInsightCard } from "@/components/dashboard/ai-insight-card"
 import db from "@/data/mock/db.json"
-import { motion } from "framer-motion"
+import { motion, Variants } from "framer-motion"
 import { calculateCategoryBreakdown, Transaction } from "@/lib/finance"
 
-const container = {
+const container: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -16,7 +16,7 @@ const container = {
   }
 }
 
-const item = {
+const item: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
 }
